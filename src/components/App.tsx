@@ -1,29 +1,30 @@
 import React from 'react';
-import { ChildComponent } from './ChildComponent';
+import { User } from '../model/Model';
+import { AuthService } from '../services/AuthService';
+import { Login } from './Login';
 //import './App.css';
 
 interface AppState {
-  appCounter: number
+  user: User | undefined
 }
 
-export class App extends React.Component<{}, AppState>{
-  state: AppState = {
-    appCounter: 0
+export class App extends React.Component<{}, {}> {
+  private authService = new AuthService();
+
+  constructor(props: any) {
+    super(props);
+    this.setUser = this.setUser.bind(this);
   }
 
-  private incrementCounter() {
-    this.setState({
-      appCounter: this.state.appCounter + 1
-    });
+  private setUser(user: User){
+    this.setState({user: user});
+    console.log("User logged in: " + user.username);
   }
 
   render() {
-    console.log("rendering parent");
-    return(
-      <div className="ParentComponent">
-        Parent Component <br/>
-        <button onClick={()=>this.incrementCounter()}>Increment parent</button><br/>
-        <ChildComponent appCounter={this.state.appCounter}/>
+    return (
+      <div>Test
+        <Login authService={this.authService} setUser={this.setUser}/>        
       </div>
     )
   }
