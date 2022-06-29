@@ -8,6 +8,8 @@ import { NavBar } from './NavBar';
 import { create } from 'domain';
 import { Home } from './Home';
 import { Profile } from './Profile';
+import { Spaces } from './SpaceComponent/Spaces'
+import { DataService } from '../services/DataService';
 //import './App.css';
 
 interface AppState {
@@ -16,12 +18,15 @@ interface AppState {
 
 export class App extends React.Component<{}, AppState> {
   private authService = new AuthService();
+  private dataService = new DataService();
 
   constructor(props: any) {
     super(props);
     this.state = {
       user: undefined
     };
+
+    // Bind callback
     this.setUser = this.setUser.bind(this);
   }
 
@@ -43,6 +48,9 @@ export class App extends React.Component<{}, AppState> {
               </Route>
               <Route exact path='/profile'>
                 <Profile authService={this.authService} user={this.state.user}/>
+              </Route>
+              <Route exact path='/spaces'>
+                <Spaces dataService={this.dataService}/>
               </Route>
             </Switch>
           </div>
